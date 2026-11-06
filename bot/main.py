@@ -1,6 +1,8 @@
 import logging
 import asyncio
 import threading
+import time
+import urllib.request
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import sys
 import os
@@ -74,6 +76,22 @@ def start_health_server():
             break
         except OSError:
             continue
+
+def self_keepalive_worker():
+    render_url = os.environ.get("RENDER_EXTERNAL_URL")
+    if not render_url:
+        logger.info("No RENDER_EXTERNAL_URL detected. Self-ping idle.")
+        return
+    logger.info("Self-keepalive loop active for Render URL: %s", render_url)
+    # Ping every 8 minutes (480 seconds) to prevent Render's 15-minute idle shutdown
+    while True:
+        time.sleep(480)
+        try:
+            req = urllib.request.Request(render_url, headers={"User-Agent": "OpenSTEM-KeepAlive/1.0"})
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                logger.info("Keep-alive self-ping sent to %s (status %s) - Render timer reset!", render_url, resp.status)
+        except Exception as e:
+            logger.warning("Keep-alive self-ping notice: %s", e)
 
 async def callback_router(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -212,6 +230,10 @@ async def run_bot_forever():
     # Start background HTTP server in a separate thread for cloud hosting
     t = threading.Thread(target=start_health_server, daemon=True)
     t.start()
+
+    # Start self-keepalive pinger in background to keep Render awake 24/7
+    t_ping = threading.Thread(target=self_keepalive_worker, daemon=True)
+    t_ping.start()
 
     # Resilient initialization and polling loop
     while True:
