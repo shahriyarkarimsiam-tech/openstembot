@@ -3,6 +3,7 @@ import os
 BOT_TOKEN = os.getenv("BOT_TOKEN", "9261137513:AAGJZYDnYFng_z9hsCpDOBsWw5qK9SU27Z0")
 LEAD_EMAIL = "shahriyarkarimsiam@gmail.com"
 TELEGRAM_CHANNEL = "https://t.me/openstemedu"
+TELEGRAM_DISCUSSION = "https://t.me/openstemdiscussion"
 
 # Official Ecosystem Links
 URLS = {
@@ -17,4 +18,5 @@ URLS = {
     "facebook": "https://www.facebook.com/profile.php?id=61595686350739",
     "discord": "https://discord.com/invite/tBBKtvFJzW",
     "telegram": "https://t.me/openstemedu",
+    "telegram_discussion": "https://t.me/openstemdiscussion",
 }

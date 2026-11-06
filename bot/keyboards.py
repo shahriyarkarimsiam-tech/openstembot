@@ -1,5 +1,5 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup
-from bot.config import URLS, LEAD_EMAIL, TELEGRAM_CHANNEL
+from bot.config import URLS, LEAD_EMAIL, TELEGRAM_CHANNEL, TELEGRAM_DISCUSSION
 
 EXPLORE_WEB_URL = "https://openstemfield.org/#/explore"
 RECRUITMENT_URL = URLS["recruitment"]
@@ -7,6 +7,7 @@ BRIDGE_URL = URLS["bridge"]
 GMAIL_URL = f"https://mail.google.com/mail/?view=cm&fs=1&to={LEAD_EMAIL}"
 GMAIL_RESEARCH_URL = f"https://mail.google.com/mail/?view=cm&fs=1&to={LEAD_EMAIL}&su=Research%20Supervision%20%26%20Professor%20Outreach%20Inquiry"
 TELEGRAM_CHANNEL_URL = TELEGRAM_CHANNEL
+TELEGRAM_DISCUSSION_URL = TELEGRAM_DISCUSSION
 
 COUNTRY_FLAGS = {
     "USA": "🇺🇸",
@@ -42,7 +43,10 @@ def get_main_menu_keyboard():
 
 def get_welcome_inline_keyboard():
     return InlineKeyboardMarkup([
-        [InlineKeyboardButton("📢 Join OpenSTEM Telegram Channel ↗", url=TELEGRAM_CHANNEL)],
+        [
+            InlineKeyboardButton("📢 Official Channel ↗", url=TELEGRAM_CHANNEL),
+            InlineKeyboardButton("💬 Free Consultancy ↗", url=TELEGRAM_DISCUSSION),
+        ],
         [InlineKeyboardButton("🌐 Explore OpenSTEM", callback_data="open_explore")],
         [InlineKeyboardButton("🎓 Explore Your Opportunity", callback_data="open_opp_start")],
         [InlineKeyboardButton("🏛️ Explore Your Waiting University", callback_data="open_waiting_start")],
@@ -70,7 +74,8 @@ def get_explore_openstem_keyboard():
             InlineKeyboardButton("🔄 OpenSTEM Replicate", url=URLS["replicate"]),
         ],
         [
-            InlineKeyboardButton("📢 Telegram Channel: OpenSTEM ↗", url=TELEGRAM_CHANNEL),
+            InlineKeyboardButton("📢 Telegram Channel ↗", url=TELEGRAM_CHANNEL),
+            InlineKeyboardButton("💬 Free Consultancy ↗", url=TELEGRAM_DISCUSSION),
         ],
         [
             InlineKeyboardButton("📺 YouTube Channel", url=URLS["youtube"]),
@@ -177,8 +182,12 @@ def get_opportunities_view_keyboard(total_pages, current_page, current_type="all
     ]
 
     contact_row = [
-        InlineKeyboardButton(f"✉️ {LEAD_EMAIL}", url=GMAIL_URL),
-        InlineKeyboardButton("📢 OpenSTEM Channel ↗", url=TELEGRAM_CHANNEL),
+        InlineKeyboardButton("📢 Channel ↗", url=TELEGRAM_CHANNEL),
+        InlineKeyboardButton("💬 Free Consultancy ↗", url=TELEGRAM_DISCUSSION),
+    ]
+
+    email_row = [
+        InlineKeyboardButton(f"✉️ {LEAD_EMAIL}", url=GMAIL_URL)
     ]
 
     web_row = [
@@ -194,6 +203,7 @@ def get_opportunities_view_keyboard(total_pages, current_page, current_type="all
         keyboard.append(nav_row)
     keyboard.append(change_filter_row)
     keyboard.append(contact_row)
+    keyboard.append(email_row)
     keyboard.append(web_row)
     keyboard.append(main_menu_row)
 
@@ -214,10 +224,13 @@ def get_waiting_countries_keyboard(country_counts):
 
     buttons.append([InlineKeyboardButton("🌍 All Countries (1,134)", callback_data="w_cnt_all")])
     buttons.append([
-        InlineKeyboardButton("🎓 OpenSTEM Recruitment ↗", url=RECRUITMENT_URL),
-        InlineKeyboardButton("📢 OpenSTEM Channel ↗", url=TELEGRAM_CHANNEL),
+        InlineKeyboardButton("📢 Channel ↗", url=TELEGRAM_CHANNEL),
+        InlineKeyboardButton("💬 Free Consultancy ↗", url=TELEGRAM_DISCUSSION),
     ])
-    buttons.append([InlineKeyboardButton(f"✉️ {LEAD_EMAIL}", url=GMAIL_URL)])
+    buttons.append([
+        InlineKeyboardButton("🎓 OpenSTEM Recruitment ↗", url=RECRUITMENT_URL),
+        InlineKeyboardButton(f"✉️ {LEAD_EMAIL}", url=GMAIL_URL),
+    ])
     buttons.append([InlineKeyboardButton("« Back to Main Menu", callback_data="back_to_main")])
     return InlineKeyboardMarkup(buttons)
 
@@ -238,8 +251,11 @@ def get_waiting_universities_view_keyboard(total_pages, current_page):
         InlineKeyboardButton("🎓 OpenSTEM Recruitment ↗", url=RECRUITMENT_URL)
     ])
     buttons.append([
+        InlineKeyboardButton("📢 Channel ↗", url=TELEGRAM_CHANNEL),
+        InlineKeyboardButton("💬 Free Consultancy ↗", url=TELEGRAM_DISCUSSION),
+    ])
+    buttons.append([
         InlineKeyboardButton(f"✉️ {LEAD_EMAIL}", url=GMAIL_URL),
-        InlineKeyboardButton("📢 OpenSTEM Channel ↗", url=TELEGRAM_CHANNEL),
     ])
     buttons.append([
         InlineKeyboardButton("« Back to Main Menu", callback_data="back_to_main")
@@ -269,11 +285,12 @@ def get_professors_subject_keyboard():
             InlineKeyboardButton("🌐 All Subjects (5,090)", callback_data="p_sub_all"),
         ],
         [
-            InlineKeyboardButton("🌉 OpenSTEM Bridge ↗", url=BRIDGE_URL),
-            InlineKeyboardButton("📢 OpenSTEM Channel ↗", url=TELEGRAM_CHANNEL),
+            InlineKeyboardButton("📢 Channel ↗", url=TELEGRAM_CHANNEL),
+            InlineKeyboardButton("💬 Free Consultancy ↗", url=TELEGRAM_DISCUSSION),
         ],
         [
-            InlineKeyboardButton(f"✉️ {LEAD_EMAIL}", url=GMAIL_RESEARCH_URL)
+            InlineKeyboardButton("🌉 OpenSTEM Bridge ↗", url=BRIDGE_URL),
+            InlineKeyboardButton(f"✉️ {LEAD_EMAIL}", url=GMAIL_RESEARCH_URL),
         ],
         [
             InlineKeyboardButton("« Back to Main Menu", callback_data="back_to_main")
@@ -297,8 +314,11 @@ def get_professors_view_keyboard(total_pages, current_page):
         InlineKeyboardButton("🌉 OpenSTEM Bridge ↗", url=BRIDGE_URL),
     ])
     buttons.append([
+        InlineKeyboardButton("📢 Channel ↗", url=TELEGRAM_CHANNEL),
+        InlineKeyboardButton("💬 Free Consultancy ↗", url=TELEGRAM_DISCUSSION),
+    ])
+    buttons.append([
         InlineKeyboardButton(f"✉️ {LEAD_EMAIL}", url=GMAIL_RESEARCH_URL),
-        InlineKeyboardButton("📢 OpenSTEM Channel ↗", url=TELEGRAM_CHANNEL),
     ])
     buttons.append([
         InlineKeyboardButton("« Back to Main Menu", callback_data="back_to_main")

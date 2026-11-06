@@ -4,7 +4,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.constants import ParseMode
 from telegram.ext import ContextTypes
 from bot.db import search_opportunities
-from bot.config import LEAD_EMAIL, TELEGRAM_CHANNEL
+from bot.config import LEAD_EMAIL, TELEGRAM_CHANNEL, TELEGRAM_DISCUSSION
 from bot.keyboards import (
     get_subjects_keyboard,
     get_countries_keyboard,
@@ -57,6 +57,7 @@ def format_opportunity_card(opp):
 
     card += f"🔗 <a href='{html.escape(source)}'>Official University Link ↗</a>\n"
     card += f"📢 <b>Updates Channel:</b> <a href='{TELEGRAM_CHANNEL}'>OpenSTEM (@openstemedu)</a>\n"
+    card += f"💬 <b>Free Consultancy:</b> <a href='{TELEGRAM_DISCUSSION}'>@openstemdiscussion</a>\n"
     card += f"✉️ <b>Admissions Guidance:</b> <code>{LEAD_EMAIL}</code>"
     return card
 
