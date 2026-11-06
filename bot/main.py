@@ -221,13 +221,15 @@ async def run_bot_forever():
             if not app.running:
                 await app.start()
             if not app.updater.running:
-                await app.updater.start_polling(drop_pending_updates=True)
+                await app.updater.start_polling(drop_pending_updates=False)
 
             bot_info = await app.bot.get_me()
             logger.info("Bot is 100%% active and polling as @%s (ID: %s) with 7 buttons!", bot_info.username, bot_info.id)
 
-            stop_signal = asyncio.Event()
-            await stop_signal.wait()
+            while app.updater.running and app.running:
+                await asyncio.sleep(2)
+            logger.warning("Polling stopped unexpectedly. Reconnecting in 3 seconds...")
+            await asyncio.sleep(3)
         except Exception as e:
             logger.warning("Polling notice: %s. Auto-reconnecting in 5 seconds...", e)
             await asyncio.sleep(5)
