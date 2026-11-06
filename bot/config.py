@@ -1,6 +1,6 @@
 import os
 
-BOT_TOKEN = os.environ["BOT_TOKEN"]
+BOT_TOKEN = os.getenv("BOT_TOKEN", "9261137513:AAGJZYDnYFng_z9hsCpDOBsWw5qK9SU27Z0")
 LEAD_EMAIL = "shahriyarkarimsiam@gmail.com"
 TELEGRAM_CHANNEL = "https://t.me/openstemedu"
 
