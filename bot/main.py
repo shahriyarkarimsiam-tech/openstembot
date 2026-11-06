@@ -213,17 +213,24 @@ async def run_bot_forever():
     t = threading.Thread(target=start_health_server, daemon=True)
     t.start()
 
-    # Explicit async initialization and start
-    await app.initialize()
-    await app.start()
-    await app.updater.start_polling(drop_pending_updates=True)
+    # Resilient initialization and polling loop
+    while True:
+        try:
+            if not app._initialized:
+                await app.initialize()
+            if not app.running:
+                await app.start()
+            if not app.updater.running:
+                await app.updater.start_polling(drop_pending_updates=True)
 
-    bot_info = await app.bot.get_me()
-    logger.info("Bot is 100%% active and polling as @%s (ID: %s) with 7 buttons!", bot_info.username, bot_info.id)
+            bot_info = await app.bot.get_me()
+            logger.info("Bot is 100%% active and polling as @%s (ID: %s) with 7 buttons!", bot_info.username, bot_info.id)
 
-    # Keep running indefinitely
-    stop_signal = asyncio.Event()
-    await stop_signal.wait()
+            stop_signal = asyncio.Event()
+            await stop_signal.wait()
+        except Exception as e:
+            logger.warning("Polling notice: %s. Auto-reconnecting in 5 seconds...", e)
+            await asyncio.sleep(5)
 
 def main():
     asyncio.run(run_bot_forever())
