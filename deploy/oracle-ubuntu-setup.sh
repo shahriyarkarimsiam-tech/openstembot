@@ -8,7 +8,7 @@ APP_DIR="/opt/openstem-telegram-bot"
 SERVICE_USER="openstembot"
 SERVICE_FILE="/etc/systemd/system/openstem-bot.service"
 ENV_FILE="/etc/openstem-bot.env"
-REPO_URL="https://github.com/karim8siam/openstemtg.git"
+REPO_URL="https://github.com/shahriyarkarimsiam-tech/openstembot.git"
 
 if [[ "$(id -u)" -ne 0 ]]; then
   echo "Run as root: sudo bash deploy/oracle-ubuntu-setup.sh" >&2

@@ -34,8 +34,8 @@ On the remote Ubuntu VM:
 ```bash
 sudo apt-get update
 sudo apt-get install -y git
-git clone --depth 1 https://github.com/karim8siam/openstemtg.git ~/openstemtg-install
-sudo bash ~/openstemtg-install/deploy/oracle-ubuntu-setup.sh
+git clone --depth 1 https://github.com/shahriyarkarimsiam-tech/openstembot.git ~/openstembot-install
+sudo bash ~/openstembot-install/deploy/oracle-ubuntu-setup.sh
 ```
 
 The installer creates a dedicated non-login Linux user, clones the GitHub code to `/opt/openstem-telegram-bot`, installs requirements into a Python virtual environment, and configures a systemd service that automatically restarts the bot. It intentionally **does not start the service** until you add a new Telegram bot token.

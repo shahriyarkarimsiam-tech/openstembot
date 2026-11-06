@@ -11,7 +11,7 @@ This repository runs a **long-polling Python Telegram bot**. It requires an alwa
 ## Deployment
 
 1. Sign in to [Railway](https://railway.com/) and select **New Project** → **Deploy from GitHub repo**.
-2. Connect the `karim8siam/openstemtg` repository, branch `main`.
+2. Connect the `shahriyarkarimsiam-tech/openstembot` repository, branch `main`.
 3. Under the new service's **Variables** tab add one variable:
    - **Name**: `BOT_TOKEN`
    - **Value**: the **new**, private BotFather token.
